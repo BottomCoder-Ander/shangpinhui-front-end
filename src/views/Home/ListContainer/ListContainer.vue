@@ -102,6 +102,11 @@
 <script>
 export default {
   name: "ListContainer",
+  mounted() {
+    // 派发action，将数据存储在仓库中
+    this.$store.dispatch("bannerList");
+    console.log($this.store.home.bannerList);
+  },
 };
 </script>
 

@@ -74,23 +74,13 @@ export default {
       //   `/search/${this.keyword}?k=${this.keyword.toUpperCase()}`
       // );
       // 3.对象
-      this.$router.push({
-        name: "search",
-        params: { keyword: this.keyword },
-        query: { k: this.keyword.toUpperCase() },
-      });
+      let location = { name: "search", keyword: this.keyword || undefined };
 
-      this.$router.push(
-        {
-          name: "search",
-          params: { keyword: "" || undefined },
-          query: {
-            k: this.keyword,
-          },
-        },
-        () => {},
-        () => {}
-      );
+      if (this.$route.query) {
+        location.query = this.$route.query;
+      }
+
+      this.$router.push(location);
     },
   },
 };
