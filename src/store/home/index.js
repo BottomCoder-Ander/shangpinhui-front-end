@@ -1,9 +1,10 @@
 // home模块小仓库
-import { reqCategoryList, reqGetBannerList } from "@/api";
+import { reqCategoryList, reqBannerList, reqFloorList } from "@/api";
 const state = {
   // state中的初始值类型，应当时服务器返回的数据类型
   categoryList: [],
   bannerList: [],
+  floorList: [],
 };
 
 const mutations = {
@@ -12,6 +13,9 @@ const mutations = {
   },
   BANNERLIST(state, bannerList) {
     state.bannerList = bannerList;
+  },
+  FLOORLIST(state, floorList) {
+    state.floorList = floorList;
   },
 };
 
@@ -23,10 +27,16 @@ const actions = {
       mutation.commit("CATEGORYLIST", result.data);
     }
   },
-  async bannerList({ commit }) {
-    let result = await reqGetBannerList();
+  async bannerList(mutation) {
+    let result = await reqBannerList();
     if (result.code == 200) {
-      commit("BANNERLIST", result.data);
+      mutation.commit("BANNERLIST", result.data);
+    }
+  },
+  async floorList(mutation) {
+    let result = await reqFloorList();
+    if (result.code == 200) {
+      mutation.commit("FLOORLIST", result.data);
     }
   },
 };

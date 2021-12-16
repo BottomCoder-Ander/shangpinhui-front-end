@@ -3,7 +3,7 @@
     <TypeNav />
     <div class="main">
       <div class="py-container">
-        <!--bread-->
+        <!--Breadcrumb,面包屑-->
         <div class="bread">
           <ul class="fl sui-breadcrumb">
             <li>
@@ -463,7 +463,9 @@ import TypeNav from "@/views/TypeNav";
 import SearchSelector from "./SearchSelector/SearchSelector";
 export default {
   name: "Search",
-
+  mounted() {
+    this.$store.dispatch("searchInfo", {});
+  },
   components: {
     SearchSelector,
     TypeNav,
