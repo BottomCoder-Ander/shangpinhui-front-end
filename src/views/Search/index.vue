@@ -49,17 +49,17 @@
           </div>
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5">
+              <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
-                      ><img src="./images/mobile01.png"
+                    <a href="item.html" target="_blank">
+                      <img :src="good.defaultImg"
                     /></a>
                   </div>
                   <div class="price">
                     <strong>
                       <em>¥</em>
-                      <i>6088.00</i>
+                      <i>{{ good.price }}.00</i>
                     </strong>
                   </div>
                   <div class="attr">
@@ -67,9 +67,7 @@
                       target="_blank"
                       href="item.html"
                       title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                      >Apple苹果iPhone 6s (A1699)Apple苹果iPhone 6s
-                      (A1699)Apple苹果iPhone 6s (A1699)Apple苹果iPhone 6s
-                      (A1699)</a
+                      >{{ good.title }}</a
                     >
                   </div>
                   <div class="commit">
@@ -461,14 +459,40 @@
 <script>
 import TypeNav from "@/views/TypeNav";
 import SearchSelector from "./SearchSelector/SearchSelector";
+import { mapGetters } from "vuex";
 export default {
   name: "Search",
-  mounted() {
-    this.$store.dispatch("searchInfo", {});
-  },
   components: {
     SearchSelector,
     TypeNav,
+  },
+  computed: {
+    ...mapGetters(["goodsList", "trademarkList", "attrsList"]),
+  },
+  beforeMount() {
+    Object.assign(this.searchParams, this.$route.query, this.$route.params);
+    getSearchInfo();
+  },
+  mouted() {},
+  data() {
+    return {
+      searchParams: {
+        category1Id: "",
+        category2Id: "",
+        category3Id: "",
+        keyword: "",
+        pageNo: 1,
+        pageSize: 10,
+        order: "",
+        props: ["1:1700-2799:价格", "2:6.65-6.74英寸：屏幕尺寸"],
+        trademark: "",
+      },
+    };
+  },
+  methods: {
+    getSearchInfo(params) {
+      this.$store.dispatch("searchInfo", this.searchParams);
+    },
   },
 };
 </script>
