@@ -7,7 +7,7 @@
           <li
             v-for="trademark in trademarkList"
             :key="trademark.tmId"
-            @click="tradeMarkHandler(trademark)"
+            @click="trademarkHandler(trademark)"
           >
             {{ trademark.tmName }}
           </li>
@@ -126,9 +126,9 @@ export default {
   computed: {
     ...mapGetters(["trademarkList", "attrsList"]),
   },
-  method: {
+  methods: {
     // 品牌点击事件
-    tradeMarkHandler(trademark) {
+    trademarkHandler(trademark) {
       this.$emit("trademarkInfo", trademark);
     },
   },

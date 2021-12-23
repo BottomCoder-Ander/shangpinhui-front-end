@@ -6,7 +6,7 @@ const state = {
 
 const mutations = {
   SEARCHINFO(state, searchInfo) {
-    data.searchInfo = searchInfo;
+    state.searchInfo = searchInfo;
   },
 };
 

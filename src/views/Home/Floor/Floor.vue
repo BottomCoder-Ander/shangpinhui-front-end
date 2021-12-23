@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import Swiper from "swiper"
 export default {
   name: "Floor",
   props: ["floorItemList"],

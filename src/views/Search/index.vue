@@ -12,17 +12,17 @@
           </ul>
           <ul class="fl sui-tag">
             <!-- 分类的面包屑 -->
-            <li class="with-x" v-if="searchPrams.categoryName">
-              {{ searchParams.categorityName }}
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName }}
               <i @click="removeCategoryName">x</i>
             </li>
             <!-- 关键字的面包屑 -->
-            <li class="with-x" v-if="searchPrams.keyword">
+            <li class="with-x" v-if="searchParams.keyword">
               {{ searchParams.keyword }}
               <i @click="removeKeyword">x</i>
             </li>
             <!-- 品牌商标的面包屑 -->
-            <li class="with-x" v-if="searchPrams.trademark">
+            <li class="with-x" v-if="searchParams.trademark">
               {{ searchParams.trademark.split(":")[1] }}
               <i @click="removeTrademark">x</i>
             </li>
@@ -483,8 +483,8 @@ export default {
   beforeMount() {
     Object.assign(this.searchParams, this.$route.query, this.$route.params);
   },
-  mouted() {
-    getSearchInfo();
+  mounted() {
+    this.getSearchInfo();
   },
   data() {
     return {
@@ -496,13 +496,13 @@ export default {
         pageNo: 1,
         pageSize: 10,
         order: "",
-        props: ["1:1700-2799:价格", "2:6.65-6.74英寸：屏幕尺寸"],
+        props: [],
         trademark: "",
       },
     };
   },
   methods: {
-    getSearchInfo(params) {
+    getSearchInfo() {
       this.$store.dispatch("searchInfo", this.searchParams);
     },
     clearCategoryId() {
@@ -517,23 +517,17 @@ export default {
       this.clearCategoryId();
       // this.getSearchInfo();
       // 地址栏也需要更改：进行路由跳转
-      if (this.$route.params)
-        this.$route.push({ name: "search", params: this.$route.params });
-
-      // 为什么不用else?
-      // else this.$route.push({ name: "search" });
+      this.$router.push({ name: "search", params: this.$route.params });
     },
     removeKeyword() {
       this.searchParams.keyword = undefined;
       this.searchParams.params = undefined;
-      // 再次发请求
+      // 路由跳转就会发请求的，这个多余
       // this.getSearchInfo();
       //还需要清除Header组件中的关键字
       this.$bus.$emit("clearKeyword");
       //进行路由跳转(地址栏改变)
-      if (this.$route.query)
-        this.$router.push({ name: "search", query: this.$route.query });
-      // else this.$router.push({ name: "search" });
+      this.$router.push({ name: "search", query: this.$route.query });
     },
     trademarkInfo(trademark) {
       this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;

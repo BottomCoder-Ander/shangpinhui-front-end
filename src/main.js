@@ -11,6 +11,7 @@ import "swiper/css/swiper.css";
 import TypeNav from "@/components/TypeNav";
 import Carousel from "@/components/Carousel";
 
+// 注册全局组件
 Vue.component(TypeNav.name, TypeNav);
 Vue.component(Carousel.name, Carousel);
 
