@@ -347,7 +347,7 @@
 </template>
 
 <script>
-import TypeNav from "@/views/TypeNav";
+import TypeNav from "@/components/TypeNav";
 import ImageList from "./ImageList/ImageList";
 
 import Zoom from "./Zoom/Zoom";
