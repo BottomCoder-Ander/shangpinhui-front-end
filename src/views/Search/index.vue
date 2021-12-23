@@ -11,15 +11,26 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <!-- 分类的面包屑 -->
+            <li class="with-x" v-if="searchPrams.categoryName">
+              {{ searchParams.categorityName }}
+              <i @click="removeCategoryName">x</i>
+            </li>
+            <!-- 关键字的面包屑 -->
+            <li class="with-x" v-if="searchPrams.keyword">
+              {{ searchParams.keyword }}
+              <i @click="removeKeyword">x</i>
+            </li>
+            <!-- 品牌商标的面包屑 -->
+            <li class="with-x" v-if="searchPrams.trademark">
+              {{ searchParams.trademark.split(":")[1] }}
+              <i @click="removeTrademark">x</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector @trademarkInfo="trademarkInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -457,7 +468,7 @@
 </template>
 
 <script>
-import TypeNav from "@/views/TypeNav";
+import TypeNav from "@/components/TypeNav";
 import SearchSelector from "./SearchSelector/SearchSelector";
 import { mapGetters } from "vuex";
 export default {
@@ -471,9 +482,10 @@ export default {
   },
   beforeMount() {
     Object.assign(this.searchParams, this.$route.query, this.$route.params);
+  },
+  mouted() {
     getSearchInfo();
   },
-  mouted() {},
   data() {
     return {
       searchParams: {
@@ -492,6 +504,53 @@ export default {
   methods: {
     getSearchInfo(params) {
       this.$store.dispatch("searchInfo", this.searchParams);
+    },
+    clearCategoryId() {
+      // 用undefined比""更好，请求不会带上值为undefined的字段
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
+    },
+    // 删除分类的名字
+    removeCategoryName() {
+      this.searchParams.categoryName = undefined;
+      this.clearCategoryId();
+      // this.getSearchInfo();
+      // 地址栏也需要更改：进行路由跳转
+      if (this.$route.params)
+        this.$route.push({ name: "search", params: this.$route.params });
+
+      // 为什么不用else?
+      // else this.$route.push({ name: "search" });
+    },
+    removeKeyword() {
+      this.searchParams.keyword = undefined;
+      this.searchParams.params = undefined;
+      // 再次发请求
+      // this.getSearchInfo();
+      //还需要清除Header组件中的关键字
+      this.$bus.$emit("clearKeyword");
+      //进行路由跳转(地址栏改变)
+      if (this.$route.query)
+        this.$router.push({ name: "search", query: this.$route.query });
+      // else this.$router.push({ name: "search" });
+    },
+    trademarkInfo(trademark) {
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      this.getSearchInfo();
+    },
+    removeTrademark() {
+      this.searchParams.trademark = undefined;
+      this.getSearchInfo();
+    },
+  },
+  watch: {
+    $route(newVal, oldVal) {
+      Object.assign(this.searchParams, newVal.query, newVal.params);
+      this.getSearchInfo();
+      // 每次应该把一二三级ID清空，接收下一次的id
+      // 不然每次点击类别进行请求，都会带上上一次的id
+      this.clearCategoryId();
     },
   },
 };
