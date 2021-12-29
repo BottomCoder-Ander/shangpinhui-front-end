@@ -26,21 +26,44 @@
               {{ searchParams.trademark.split(":")[1] }}
               <i @click="removeTrademark">x</i>
             </li>
+            <!-- 售卖属性关键字 -->
+            <li
+              class="with-x"
+              v-for="(attrValue, index) in searchParams.props"
+              :key="index"
+            >
+              {{ attrValue.split(":")[1] }}
+              <i @click="removeAttr(index)">x</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @trademarkInfo="trademarkInfo" />
+        <SearchSelector
+          @trademarkInfo="trademarkInfo"
+          @attrClickHandler="attrClickHandler"
+        />
 
         <!--details-->
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
+              <!-- 排序的结构 -->
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li
+                  :class="{ active: activeItemOne }"
+                  @click="changeOrder('1')"
+                >
+                  <a
+                    >综合<span
+                      v-show="activeItemOne"
+                      class="iconfont"
+                      :class="{ 'icon-up': isascent, 'icon-down': !isascent }"
+                    >
+                    </span
+                  ></a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#">销量</a>
                 </li>
                 <li>
@@ -48,12 +71,21 @@
                 </li>
                 <li>
                   <a href="#">评价</a>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                   <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                </li> -->
+                <li
+                  :class="{ active: activeItemTwo }"
+                  @click="changeOrder('2')"
+                >
+                  <a
+                    >价格<span
+                      v-show="activeItemTwo"
+                      class="iconfont"
+                      :class="{ 'icon-up': isascent, 'icon-down': !isascent }"
+                    ></span
+                  ></a>
                 </li>
               </ul>
             </div>
@@ -479,6 +511,15 @@ export default {
   },
   computed: {
     ...mapGetters(["goodsList", "trademarkList", "attrsList"]),
+    activeItemOne: function () {
+      return this.searchParams.order.indexOf(1) != -1;
+    },
+    activeItemTwo: function () {
+      return this.searchParams.order.indexOf(2) != -1;
+    },
+    isascent() {
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
   },
   beforeMount() {
     Object.assign(this.searchParams, this.$route.query, this.$route.params);
@@ -495,7 +536,7 @@ export default {
         keyword: "",
         pageNo: 1,
         pageSize: 10,
-        order: "",
+        order: "1:asc",
         props: [],
         trademark: "",
       },
@@ -510,6 +551,18 @@ export default {
       this.searchParams.category1Id = undefined;
       this.searchParams.category2Id = undefined;
       this.searchParams.category3Id = undefined;
+    },
+    trademarkInfo(trademark) {
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      this.getSearchInfo();
+    },
+    attrClickHandler(attr, attrValue) {
+      // [属性ID：属性值：属性名]
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+      // 数组去重
+      if (this.searchParams.props.indexOf(props) == -1)
+        this.searchParams.props.push(props);
+      this.getSearchInfo();
     },
     // 删除分类的名字
     removeCategoryName() {
@@ -529,12 +582,24 @@ export default {
       //进行路由跳转(地址栏改变)
       this.$router.push({ name: "search", query: this.$route.query });
     },
-    trademarkInfo(trademark) {
-      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
-      this.getSearchInfo();
-    },
     removeTrademark() {
       this.searchParams.trademark = undefined;
+      this.getSearchInfo();
+    },
+    removeAttr(index) {
+      this.searchParams.props.splice(index, 1);
+      this.getSearchInfo();
+    },
+    changeOrder(curOrder) {
+      let order = this.searchParams.order.split(":");
+      if (order[0] == curOrder) {
+        order[1] = order[1] == "asc" ? "desc" : "asc";
+      } else {
+        order[0] = curOrder;
+        order[1] = "asc";
+      }
+      this.searchParams.order = `${order[0]}:${order[1]}`;
+
       this.getSearchInfo();
     },
   },
