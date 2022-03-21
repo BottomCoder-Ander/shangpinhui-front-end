@@ -1,12 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-
+import routes from "./routes";
 Vue.use(VueRouter);
 
-import Home from "@/views/Home";
-import Search from "@/views/Search";
-import Login from "@/views/Login";
-import Register from "@/views/Register";
 let OriginalPush = VueRouter.prototype.push;
 
 VueRouter.prototype.push = function (location, resolve, reject) {
@@ -23,39 +19,8 @@ VueRouter.prototype.push = function (location, resolve, reject) {
 };
 
 export default new VueRouter({
-  routes: [
-    {
-      path: "/",
-      redirect: "/home",
-    },
-    {
-      name: "home",
-      path: "/home",
-      component: Home,
-      meta: {
-        footer_show: true,
-      },
-    },
-    {
-      name: "search",
-      path: "/search/:keyword?",
-      component: Search,
-      meta: {
-        footer_show: true,
-      },
-    },
-    {
-      name: "login",
-      path: "/login",
-      component: Login,
-      meta: {
-        footer_show: false,
-      },
-    },
-    {
-      name: "register",
-      path: "/register",
-      component: Register,
-    },
-  ],
+  routes,
+  scrollBehavior: function (to, from, savedPosition) {
+    return { y: 0 };
+  },
 });

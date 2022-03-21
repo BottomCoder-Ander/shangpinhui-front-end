@@ -95,9 +95,12 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank">
+                    <!-- <a href="item.html" target="_blank">
                       <img :src="good.defaultImg"
-                    /></a>
+                    /></a> -->
+                    <router-link :to="`/detail/${good.id}`">
+                      <img :src="good.defaultImg"
+                    /></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -129,7 +132,7 @@
                   </div>
                 </div>
               </li>
-              <li class="yui3-u-1-5">
+              <!-- <li class="yui3-u-1-5">
                 <div class="list-wrap">
                   <div class="p-img">
                     <img src="./images/mobile02.png" />
@@ -461,38 +464,16 @@
                     >
                   </div>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <Paginator
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @getDataByPageNo="getDataByPageNo"
+          />
         </div>
       </div>
     </div>
@@ -502,7 +483,7 @@
 <script>
 import TypeNav from "@/components/TypeNav";
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Search",
   components: {
@@ -520,6 +501,10 @@ export default {
     isascent() {
       return this.searchParams.order.indexOf("asc") != -1;
     },
+    // 获取search展示的数据条目
+    ...mapState({
+      total: (state) => state.search.searchInfo.total,
+    }),
   },
   beforeMount() {
     Object.assign(this.searchParams, this.$route.query, this.$route.params);
@@ -600,6 +585,11 @@ export default {
       }
       this.searchParams.order = `${order[0]}:${order[1]}`;
 
+      this.getSearchInfo();
+    },
+    getDataByPageNo(pageNo) {
+      console.log("getDataByPageNo");
+      this.searchParams.pageNo = pageNo;
       this.getSearchInfo();
     },
   },
@@ -864,7 +854,7 @@ export default {
         overflow: hidden;
         float: right;
 
-        .sui-pagination {
+        .sui-paginator0 {
           margin: 18px 0;
 
           ul {
