@@ -42,11 +42,30 @@ export const reqSearchInfo = (params) =>
     data: params,
   });
 
-// 获取产品详情的接口s
-
+// 获取产品详情的接口
 export const reqGetGoodInfo = (skuId) =>
   requests({ url: `/item/${skuId}`, method: "get" });
 
 // 将产品添加到购物车中，或者更新某一个产品的个数
 export const reqAddorUpdateShopCart = (skuId, skuNum) =>
   requests({ url: `/cart/addToCart/${skuId}/${skuNum}`, method: "post" });
+
+// 获取验证码
+export const reqGetCode = (phone) =>
+  requests({ url: `/user/passport/sendCode/${phone}`, method: "get" });
+
+//用户注册
+export const reqUserRegister = (data) =>
+  requests({ url: "/user/passport/register", data, method: "post" });
+
+//登录
+export const reqUserLogin = (data) =>
+  requests({ url: "/user/passport/login", data, method: "post" });
+
+// 带着token向服务器获取用户信息
+export const reqUserInfo = () =>
+  requests({ url: "/user/passport/auth/getUserInfo", method: "get" });
+
+// 退出登录
+export const reqUserLogout = () =>
+  requests({ url: "/user/passport/logout", method: "get" });

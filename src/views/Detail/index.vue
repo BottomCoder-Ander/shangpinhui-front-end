@@ -431,7 +431,7 @@ export default {
       if (--this.skuNum == 0) this.skuNum = 1;
     },
     // 加入购物车的回调函数
-    addShopCar() {
+    async addShopCar() {
       // 也可以写成.then(xxx).catch()的形式
       try {
         let result = await this.$store.dispatch("addOrUpdateShopCart", {

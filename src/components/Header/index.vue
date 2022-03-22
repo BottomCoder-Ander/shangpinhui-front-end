@@ -7,10 +7,15 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+
+          <p v-if="!userName">
             <span>请</span>
-            <a href="###">登录</a>
-            <a href="###" class="register">免费注册</a>
+            <router-link to="/login">登录</router-link>
+            <router-link class="register" to="/register">免费注册</router-link>
+          </p>
+          <p v-else>
+            <a> 用户名：{{ userName }}</a>
+            <a class="register" @click="logout"> 退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -61,6 +66,13 @@ export default {
       keyword: "",
     };
   },
+  computed: {
+    userName() {
+      console.log("username");
+      console.log(this.$store.state.user);
+      return this.$store.state.user.userInfo.name;
+    },
+  },
   methods: {
     goSearch() {
       // 1.字符串传参
@@ -85,6 +97,23 @@ export default {
 
       this.$router.push(location);
     },
+    logout() {
+      //1. 发送请求通知服务器退出登录
+      //2. 清除本地token，userInfo
+      try {
+        this.$store.dispatch("userLogout");
+        //跳转首页
+        this.$router.replace("/home");
+      } catch (error) {
+        alert("退出失败," + error);
+      }
+    },
+  },
+  beforeCreate() {
+    console.log("beforeCreate");
+  },
+  beforeMount() {
+    console.log("beforemount");
   },
   mounted() {
     this.$bus.$on("clearKeyword", () => {
