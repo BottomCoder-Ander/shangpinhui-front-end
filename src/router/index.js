@@ -28,10 +28,9 @@ let router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   let token = store.state.user.token;
   let name = store.state.user.userInfo.name;
-  console.log("token = " + token);
+
   // 未登录
   if (!token) {
-    console.log("Next");
     next();
     return;
   }
@@ -42,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
   } else if (name) {
     next();
   } else {
-    //没有用户信息，派发action让仓库存储用户信息在跳转try
+    //没有用户信息，派发action让仓库存储用户信息在跳转
     //获取用户信息成功
     try {
       await store.dispatch("getUserInfo");

@@ -402,7 +402,6 @@ export default {
   computed: {
     ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
     skuImageList() {
-      console.log(this.skuInfo.skuImageList);
       return this.skuInfo.skuImageList || [{}];
     },
   },

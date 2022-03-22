@@ -588,7 +588,6 @@ export default {
       this.getSearchInfo();
     },
     getDataByPageNo(pageNo) {
-      console.log("getDataByPageNo");
       this.searchParams.pageNo = pageNo;
       this.getSearchInfo();
     },

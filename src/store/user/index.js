@@ -40,7 +40,6 @@ const actions = {
     return Promise.reject(new Error("getcode error: " + result.message));
   },
   async userRegister({ commit }, data) {
-    console.log("userRegister action");
     let result = await reqUserRegister(data);
     if (result.code == 200) {
       return "ok";
@@ -50,7 +49,6 @@ const actions = {
   },
   async userLogin({ commit }, data) {
     let result = await reqUserLogin(data);
-    console.log("login data");
 
     if ((result.code = 200 && result.ok)) {
       commit("USERLOGIN", result.data.token);

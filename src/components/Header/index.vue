@@ -68,8 +68,6 @@ export default {
   },
   computed: {
     userName() {
-      console.log("username");
-      console.log(this.$store.state.user);
       return this.$store.state.user.userInfo.name;
     },
   },
@@ -108,12 +106,6 @@ export default {
         alert("退出失败," + error);
       }
     },
-  },
-  beforeCreate() {
-    console.log("beforeCreate");
-  },
-  beforeMount() {
-    console.log("beforemount");
   },
   mounted() {
     this.$bus.$on("clearKeyword", () => {

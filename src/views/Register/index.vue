@@ -82,9 +82,7 @@ export default {
     async getCode() {
       try {
         const { phone } = this;
-        console.log("getcode", this);
         phone && (await this.$store.dispatch("getCode", phone));
-        console.log("getcode done");
         this.code = this.$store.state.user.code;
         alert("code: " + this.code);
       } catch (error) {
