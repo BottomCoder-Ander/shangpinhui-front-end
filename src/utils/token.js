@@ -6,5 +6,7 @@ export const getLoginToken = () => {
 };
 
 export const removeLoginToken = () => {
+  console.log("remove token");
   localStorage.removeItem("LOGINTOKEN");
+  console.log("token is " + localStorage.getItem("LOGINTOKEN"));
 };

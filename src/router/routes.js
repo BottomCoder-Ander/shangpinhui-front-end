@@ -46,6 +46,7 @@ export default [
     component: Register,
   },
   {
+    name: "addcartsuccess",
     path: "/addcartsuccess",
     component: AddCartSuccess,
     meta: {

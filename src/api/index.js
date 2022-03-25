@@ -69,3 +69,7 @@ export const reqUserInfo = () =>
 // 退出登录
 export const reqUserLogout = () =>
   requests({ url: "/user/passport/logout", method: "get" });
+
+// 获取购物车数据
+export const reqCartList = () =>
+  requests({ url: "/cart/cartList ", method: "get" });

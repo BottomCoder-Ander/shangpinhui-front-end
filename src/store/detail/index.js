@@ -1,6 +1,8 @@
 import { reqGetGoodInfo, reqAddorUpdateShopCart } from "@/api";
+import { getUUID } from "@/utils/uuid_token";
 const state = {
   goodInfo: {},
+  uuid_token: getUUID(),
 };
 
 const mutations = {
@@ -19,12 +21,12 @@ const actions = {
   },
   // 产品添加到购物车中
   // async 返回值为Promise， promise的结果为async函数的返回值决定，返回一个普通字符串表示成功
-  async AddorUpdateShopCart({ commit }, { skuId, skuNum }) {
+  async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
     let result = await reqAddorUpdateShopCart(skuId, skuNum);
-    if (result == 200) {
+    if (result.code == 200) {
       return "ok";
     }
-    return Promise.reject(new Error("failed"));
+    return Promise.reject(new Error("加入购物车失败，" + result.message));
   },
 };
 

@@ -95,13 +95,13 @@ export default {
 
       this.$router.push(location);
     },
-    logout() {
+    async logout() {
       //1. 发送请求通知服务器退出登录
       //2. 清除本地token，userInfo
       try {
-        this.$store.dispatch("userLogout");
+        await this.$store.dispatch("userLogout");
         //跳转首页
-        this.$router.replace("/home");
+        this.$router.push("/home");
       } catch (error) {
         alert("退出失败," + error);
       }

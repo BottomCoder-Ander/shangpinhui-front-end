@@ -21,7 +21,7 @@
           <router-link class="sui-btn btn-xlarge" :to="`/detail/${skuInfo.id}`">
             查看商品详情
           </router-link>
-          <a href="javascript:">去购物车结算 > </a>
+          <!-- <a href="javascript:">去购物车结算 > </a> -->
           <router-link to="/shoppingcart">去购物车结算</router-link>
         </div>
       </div>
