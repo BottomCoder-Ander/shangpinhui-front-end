@@ -62,7 +62,7 @@
             <span class="sum">{{ cart.skuPrice * cart.skuNum }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a class="sindelet" @click="deleteCartById(cart)">删除</a>
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -148,6 +148,15 @@ export default {
         }
       } catch (error) {
         alert("加入购物车错误");
+      }
+    },
+    // 删除某个产品的事件回调函数
+    deleteCartById(cart) {
+      try {
+        await this.$store.dispatch("deleteCartListBySkuId", cart.skuId);
+        this.getCartList();
+      } catch (error) {
+        alert(error);
       }
     },
   },

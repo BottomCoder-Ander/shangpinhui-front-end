@@ -17,6 +17,12 @@ const actions = {
       commit("GETCARTLIST", result.data);
     }
   },
+  async deleteCartListBySkuId(commit, skuId) {
+    let result = await reqDeleteCartById(skuId);
+    if (result.code == 200) {
+      return "ok";
+    } else return Promise.reject(new Error("删除失败，" + result.message));
+  },
 };
 
 const getters = {
