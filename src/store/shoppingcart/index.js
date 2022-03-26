@@ -16,7 +16,6 @@ const actions = {
     if (result.code == 200) {
       commit("GETCARTLIST", result.data);
     }
-    console.log(result);
   },
 };
 
