@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import throttle from "lodash/throttle";
 import { mapGetters } from "vuex";
 export default {
   name: "ShoppingCart",
@@ -122,7 +123,7 @@ export default {
     getCartList() {
       this.$store.dispatch("getCartList");
     },
-    async changeNum(type, diff, cart) {
+    changeNum: throttle(async function (type, diff, cart) {
       switch (type) {
         case "add":
           diff = 1;
@@ -149,7 +150,7 @@ export default {
       } catch (error) {
         alert("加入购物车错误");
       }
-    },
+    }, 1000),
     // 删除某个产品的事件回调函数
     deleteCartById(cart) {
       try {
