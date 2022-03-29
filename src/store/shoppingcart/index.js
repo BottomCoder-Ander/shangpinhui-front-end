@@ -38,12 +38,12 @@ const actions = {
       let promise =
         item.isChecked == 1
           ? dispatch("deleteCartListBySkuId", item.skuId)
-          : "";
+          : "ok";
       //将每一次返回的Promise添加到数组当中
       promiseAll.push(promise);
     });
     //只要全部的p1|p2..都成功，返回结果即为成功
-    return promise.all(promiseAll);
+    return Promise.all(promiseAll);
   },
   async updateAllCartChecked({ getters, dispatch }, isChecked) {
     let promiseAll = [];
