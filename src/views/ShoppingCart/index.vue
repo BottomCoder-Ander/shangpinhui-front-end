@@ -21,6 +21,7 @@
               type="checkbox"
               name="chk_list"
               :checked="cart.isChecked == 1"
+              @change="updateChecked(cart, $event)"
             />
           </li>
           <li class="cart-list-con2">
@@ -71,11 +72,16 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isCheckedAll" />
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isCheckedAll"
+          @change="updateAllCartChecked"
+        />
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a @click="deleteAllCheckedCart">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -116,7 +122,10 @@ export default {
       return sum;
     },
     isCheckedAll() {
-      return this.cartInfoList.every((item) => item.isChecked);
+      return (
+        this.cartInfoList.length > 0 &&
+        this.cartInfoList.every((item) => item.isChecked)
+      );
     },
   },
   methods: {
@@ -158,6 +167,35 @@ export default {
         this.getCartList();
       } catch (error) {
         alert(error);
+      }
+    },
+    updateChecked(cart, event) {
+      let isChecked = event.target.checked ? "1" : "0";
+      try {
+        this.$store.dispatch("updateCheckedById", {
+          skuId: cart.skuId,
+          isChecked,
+        });
+        this.getCartList();
+      } catch (error) {
+        alert(error);
+      }
+    },
+    deleteAllCheckedCart() {
+      try {
+        this.$store.dispatch("deleteAllCheckedCart");
+      } catch (error) {
+        alert(error + ",删除失败");
+      }
+      this.getCartList();
+    },
+    async updateAllCartChecked(event) {
+      try {
+        let isChecked = event.target.checked ? "1" : "0";
+        await this.$store.dispatch("updateAllCartIsChecked", isChecked);
+        this.getCartList();
+      } catch (error) {
+        alert(error + ",改变状态错误");
       }
     },
   },
