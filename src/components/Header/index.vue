@@ -38,12 +38,13 @@
         </a>
       </h1>
       <div class="searchArea">
-        <form action="###" class="searchForm">
+        <form class="searchForm">
           <input
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
             v-model="keyword"
+            @keyup.enter="goSearch"
           />
           <button
             class="sui-btn btn-xlarge btn-danger"
@@ -73,6 +74,7 @@ export default {
   },
   methods: {
     goSearch() {
+      console.log("go serarec");
       // 1.字符串传参
       // this.$router.push("/search/" + this.keyword);
 
