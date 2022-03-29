@@ -1,4 +1,4 @@
-import { reqCartList } from "@/api";
+import { reqCartList, reqDeleteCartById, reqUpdateCheckedById } from "@/api";
 
 const state = {
   cartList: [],
@@ -24,7 +24,7 @@ const actions = {
     } else return Promise.reject(new Error("删除失败，" + result.message));
   },
   async updateCheckedById({ commit }, { skuId, isChecked }) {
-    let result = await reqUpdateCheckedByid(skuId, isChecked);
+    let result = await reqUpdateCheckedById(skuId, isChecked);
     if (result.code == 200) {
       return "ok";
     } else {
@@ -45,7 +45,7 @@ const actions = {
     //只要全部的p1|p2..都成功，返回结果即为成功
     return promise.all(promiseAll);
   },
-  async updateAllCartChecked({ state, getters }) {
+  async updateAllCartChecked({ getters, dispatch }, isChecked) {
     let promiseAll = [];
     getters.cartList.cartInfoList.forEach((item) => {
       let promise = dispatch("updateCheckedById", {

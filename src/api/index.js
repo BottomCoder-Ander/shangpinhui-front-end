@@ -79,5 +79,5 @@ export const reqDeleteCartById = (skuId) =>
   requests({ url: `/cart/deleteCart/${skuId}`, method: "delete" });
 
 // 商品选中状态
-export const reqUpdateCheckedByid = (skuId, isChecked) =>
+export const reqUpdateCheckedById = (skuId, isChecked) =>
   requests({ url: `/cart/checkCart/${skuId}/${isChecked}`, Method: "get" });

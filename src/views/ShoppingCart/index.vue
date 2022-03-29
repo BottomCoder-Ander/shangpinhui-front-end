@@ -122,10 +122,11 @@ export default {
       return sum;
     },
     isCheckedAll() {
-      return (
+      let res =
         this.cartInfoList.length > 0 &&
-        this.cartInfoList.every((item) => item.isChecked)
-      );
+        this.cartInfoList.every((item) => item.isChecked);
+      // console.log("res = " + res);
+      return res;
     },
   },
   methods: {
@@ -161,7 +162,7 @@ export default {
       }
     }, 1000),
     // 删除某个产品的事件回调函数
-    deleteCartById(cart) {
+    async deleteCartById(cart) {
       try {
         await this.$store.dispatch("deleteCartListBySkuId", cart.skuId);
         this.getCartList();
@@ -169,10 +170,10 @@ export default {
         alert(error);
       }
     },
-    updateChecked(cart, event) {
+    async updateChecked(cart, event) {
       let isChecked = event.target.checked ? "1" : "0";
       try {
-        this.$store.dispatch("updateCheckedById", {
+        await this.$store.dispatch("updateCheckedById", {
           skuId: cart.skuId,
           isChecked,
         });
@@ -181,9 +182,9 @@ export default {
         alert(error);
       }
     },
-    deleteAllCheckedCart() {
+    async deleteAllCheckedCart() {
       try {
-        this.$store.dispatch("deleteAllCheckedCart");
+        await this.$store.dispatch("deleteAllCheckedCart");
       } catch (error) {
         alert(error + ",删除失败");
       }
@@ -192,7 +193,7 @@ export default {
     async updateAllCartChecked(event) {
       try {
         let isChecked = event.target.checked ? "1" : "0";
-        await this.$store.dispatch("updateAllCartIsChecked", isChecked);
+        await this.$store.dispatch("updateAllCartChecked", isChecked);
         this.getCartList();
       } catch (error) {
         alert(error + ",改变状态错误");
