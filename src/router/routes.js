@@ -6,6 +6,7 @@ import Register from "@/views/Register";
 import Detail from "@/views/Detail";
 import AddCartSuccess from "@/views/AddCartSuccess";
 import ShoppingCart from "@/views/ShoppingCart";
+import Trade from "@/views/Trade";
 export default [
   {
     path: "/",
@@ -56,6 +57,13 @@ export default [
   {
     path: "/shoppingcart",
     component: ShoppingCart,
+    meta: {
+      footer_show: true,
+    },
+  },
+  {
+    path: "/trade",
+    component: Trade,
     meta: {
       footer_show: true,
     },

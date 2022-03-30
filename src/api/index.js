@@ -81,3 +81,10 @@ export const reqDeleteCartById = (skuId) =>
 // 商品选中状态
 export const reqUpdateCheckedById = (skuId, isChecked) =>
   requests({ url: `/cart/checkCart/${skuId}/${isChecked}`, Method: "get" });
+
+// 获取用户地址信息
+export const reqAddressInfo = () =>
+  requests({
+    ur1: "/user/userAddress/auth/findUserAddressList",
+    method: "get",
+  });

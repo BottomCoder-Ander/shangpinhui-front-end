@@ -64,7 +64,7 @@ const actions = {
       commit("USERINFO", result.data);
       return "ok";
     }
-    Promise.reject(new Error("getUserInfo Error, " + result.message));
+    return Promise.reject(new Error("getUserInfo Error, " + result.message));
   },
   async userLogout({ commit }) {
     let result = await reqUserLogout();

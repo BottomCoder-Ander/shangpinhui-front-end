@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
 import store from "@/store";
+import { removeLoginToken } from "@/utils/token";
 Vue.use(VueRouter);
 
 let OriginalPush = VueRouter.prototype.push;
@@ -55,7 +56,7 @@ router.beforeEach(async (to, from, next) => {
     //token失效了获取不到用户信息，重新登录, 清除token。没有必要再发请求。
     // 不过这里按道理应该判断一下是什么原因导致不能getUserInfo的。有可能不是token过期。
     // await store.dispatch("userLogout");
-    alert(error.message);
+
     store.userInfo = {};
     removeLoginToken();
 

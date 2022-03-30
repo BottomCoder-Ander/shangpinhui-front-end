@@ -9,6 +9,7 @@ import search from "./search";
 import detail from "./detail";
 import shoppingcart from "./shoppingcart";
 import user from "./user";
+import trade from "./trade";
 
 export default new Vuex.Store({
   modules: {
@@ -17,5 +18,6 @@ export default new Vuex.Store({
     detail,
     user,
     shoppingcart,
+    trade,
   },
 });
