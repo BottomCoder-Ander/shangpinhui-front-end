@@ -85,6 +85,10 @@ export const reqUpdateCheckedById = (skuId, isChecked) =>
 // 获取用户地址信息
 export const reqAddressInfo = () =>
   requests({
-    ur1: "/user/userAddress/auth/findUserAddressList",
+    url: "/user/userAddress/auth/findUserAddressList",
     method: "get",
   });
+
+// 获取交易页面商品清单
+export const reqOrderInfo = () =>
+  requests({ url: "/order/auth/trade", method: "get" });

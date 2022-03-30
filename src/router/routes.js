@@ -7,6 +7,7 @@ import Detail from "@/views/Detail";
 import AddCartSuccess from "@/views/AddCartSuccess";
 import ShoppingCart from "@/views/ShoppingCart";
 import Trade from "@/views/Trade";
+import Pay from "@/views/Pay";
 export default [
   {
     path: "/",
@@ -64,6 +65,13 @@ export default [
   {
     path: "/trade",
     component: Trade,
+    meta: {
+      footer_show: true,
+    },
+  },
+  {
+    path: "/pay",
+    component: Pay,
     meta: {
       footer_show: true,
     },
