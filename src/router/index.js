@@ -32,11 +32,19 @@ router.beforeEach(async (to, from, next) => {
 
   // 未登录
   if (!token) {
-    // if (to.path == "/shoppingcart") {
-    //   next("/login");
-    // } else {
-    next();
-    // }
+    let toPath = to.path;
+    if (
+      toPath.indexOf("/shoppingcart") != -1 ||
+      toPath.indexOf("/trade") != -1 ||
+      toPath.indexOf("/pay") != -1 ||
+      toPath.indexOf("/center") != -1
+    ) {
+      //把未登录的时候向去而没有到达的路径，存储于地址栏中【路由】
+      next("/login?redirect=" + toPath);
+    } else {
+      //去的不是上面这些路由（home|search|shopCart）---放行
+      next();
+    }
     return;
   }
 
@@ -50,18 +58,21 @@ router.beforeEach(async (to, from, next) => {
   //获取用户信息成功
   try {
     await store.dispatch("getUserInfo");
+    alert("login success");
     if (to.path == "/login") next("/home");
     else next();
   } catch (error) {
+    alert("login failed. token = " + token);
     //token失效了获取不到用户信息，重新登录, 清除token。没有必要再发请求。
     // 不过这里按道理应该判断一下是什么原因导致不能getUserInfo的。有可能不是token过期。
     // await store.dispatch("userLogout");
-
     store.userInfo = {};
     removeLoginToken();
+    alert("token = " + token + ", redirect soon");
 
-    next("/login");
+    next("/login?redirect=" + to.path);
   }
+
   // }
 });
 
