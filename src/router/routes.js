@@ -144,12 +144,63 @@ export default [
         component: () => import("@/views/Center/GroupOrder"),
       },
       {
-        path: "/center/myorder",
+        path: "myorder",
         component: () => import("@/views/Center/MyOrder"),
       },
       {
         path: "/center",
         redirect: "/center/myorder",
+      },
+    ],
+  },
+  {
+    path: "/communication",
+    component: () => import("@/views/Communication/Communication"),
+    children: [
+      {
+        path: "event",
+        component: () => import("@/views/Communication/EventTest/EventTest"),
+        meta: {
+          isHideFooter: true,
+        },
+      },
+      {
+        path: "model",
+        component: () => import("@/views/Communication/ModelTest/ModelTest"),
+        meta: {
+          isHideFooter: true,
+        },
+      },
+      {
+        path: "sync",
+        component: () => import("@/views/Communication/SyncTest/SyncTest"),
+        meta: {
+          isHideFooter: true,
+        },
+      },
+      {
+        path: "attrs-listeners",
+        component: () =>
+          import("@/views/Communication/AttrsListenersTest/AttrsListenersTest"),
+        meta: {
+          isHideFooter: true,
+        },
+      },
+      {
+        path: "children-parent",
+        component: () =>
+          import("@/views/Communication/ChildrenParentTest/ChildrenParentTest"),
+        meta: {
+          isHideFooter: true,
+        },
+      },
+      {
+        path: "scope-slot",
+        component: () =>
+          import("@/views/Communication/ScopeSlotTest/ScopeSlotTest"),
+        meta: {
+          isHideFooter: true,
+        },
       },
     ],
   },

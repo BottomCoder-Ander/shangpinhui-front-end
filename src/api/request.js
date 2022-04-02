@@ -10,7 +10,7 @@ import "nprogress/nprogress.css";
 
 // 利用axios.create创建axios对象，绑定一些默认参数
 const requests = axios.create({
-  baseURL: "http://39.98.123.211/api",
+  baseURL: "/api",
   timeout: 5000,
 });
 
