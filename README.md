@@ -9,6 +9,8 @@
 
 后续master和dev分支可能会更改，如想查看原始版本，看reserve分支。
 
+笔记有些乱，不过该有的都有。后续会继续整理
+
 ## Project setup
 ```
 npm install
