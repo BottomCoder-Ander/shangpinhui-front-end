@@ -2,6 +2,7 @@
 
 ## 说明
 和视频中的代码和命名有些不一样。笔记地址https://cadec.notion.site/8ea1c95b72c94764ab4976d60b955c4f
+管理系统前端：https://github.com/cade-kd/shangpinhui-fron-end-bgms
 
 ## Project setup
 ```
@@ -10,7 +11,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
